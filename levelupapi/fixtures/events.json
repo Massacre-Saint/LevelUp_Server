@@ -1,0 +1,24 @@
+[
+  {
+    "model" : "levelupapi.event",
+    "pk": 1,
+    "fields": {
+      "game": 1,
+      "description": "Family Time",
+      "date": "2022-11-12",
+      "time": "01:14",
+      "organizer": 1
+    }
+  },
+  {
+    "model" : "levelupapi.event",
+    "pk": 2,
+    "fields": {
+      "game": 2,
+      "description": "Rise Tarnished",
+      "date":"2022-11-13",
+      "time": "11:13",
+      "organizer": 1
+    }
+  }
+]
