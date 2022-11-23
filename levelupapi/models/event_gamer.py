@@ -1,6 +1,6 @@
 from django.db import models
 from .gamer import Gamer
-from .events import Event
+from .event import Event
 
 
 
