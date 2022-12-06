@@ -12,7 +12,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ('id', 'game', 'description', 'date', 'time', 'organizer')
-        depth = 2
+        depth = 1
         
 class EventView(ViewSet):
     """Level up game types view"""
@@ -39,10 +39,12 @@ class EventView(ViewSet):
         """
         events = Event.objects.all()
         
-        game = request.query_params.get('type', None)
-        if game is not None:
-            games = games.filter(game_id=game)
+        event_game = request.query_params.get('game', None)
+        if event_game is not None:
+            events = events.filter(game=event_game)
             
+        uid = request.META['HTTP_AUTHORIZATION']
+        gamer = Gamer.objects.get(uid=uid)
         serializer = EventSerializer(events, many=True)
         
         return Response(serializer.data)
@@ -53,7 +55,7 @@ class EventView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
-        gamer = Gamer.objects.get(id=request.data["organizer"])
+        organizer = Gamer.objects.get(uid=request.data["organizer"])
         game = Game.objects.get(pk=request.data["game"])
 
         event = Event.objects.create(
@@ -61,7 +63,7 @@ class EventView(ViewSet):
             date=request.data["date"],
             time=request.data["time"],
             game=game,
-            organizer=gamer
+            organizer=organizer
         )
         serializer = EventSerializer(event)
         return Response(serializer.data)

@@ -66,7 +66,7 @@ class GameView(ViewSet):
         )
         serializer = GameSerializer(game)
         return Response(serializer.data)
-    
+
     def update(self, request, pk):
         """Handle PUT requests for a game
 
