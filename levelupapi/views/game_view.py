@@ -53,7 +53,7 @@ class GameView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
-        gamer = Gamer.objects.get(uid=request.data["user_id"])
+        gamer = Gamer.objects.get(uid=request.data["gamer"])
         game_type = GameType.objects.get(pk=request.data["game_type"])
 
         game = Game.objects.create(
@@ -84,4 +84,9 @@ class GameView(ViewSet):
         game.game_type = game_type
         game.save()
 
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+    def destroy(self, request, pk):
+        game = Game.objects.get(pk=pk)
+        game.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
